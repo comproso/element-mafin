@@ -1,0 +1,23 @@
+{
+  "cells":
+  [{
+      "type": "input/output/distractor",
+      "figure": "full square",
+      "size": ["massive", "huge", "small"],
+      "position": ""
+    }, {
+      "figure": "",
+      "size": "",
+      "position": ""
+  }],
+  [{
+      "figure": "",
+      "size": "",
+      "position": ""
+    }, {
+      "figure": "",
+      "size": "",
+      "position": ""
+  }]
+}
+
