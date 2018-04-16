@@ -1,9 +1,8 @@
 {
   "cells":
-  [{
-      "type": "input/output/distractor",
-      "figure": "full square",
-      "size": ["massive", "huge", "small"],
+  [[{
+      "figure": "",
+      "size": "",
       "position": ""
     }, {
       "figure": "",
@@ -11,13 +10,14 @@
       "position": ""
   }],
   [{
-      "figure": "",
-      "size": "",
-      "position": ""
+      "type": "input/output/distractor",
+      "figure": "full square",
+      "size": ["massive", "small", "huge"],
+      "position": "center center"
     }, {
       "figure": "",
       "size": "",
       "position": ""
-  }]
+  }]]
 }
 
