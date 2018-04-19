@@ -1,23 +1,43 @@
 {
+  "type": "trial/test",
   "cells":
   [[{
-      "figure": "",
-      "size": "",
-      "position": ""
+      "type": "input/output/distractor",
+      "figure": "full square",
+      "size": ["massive", "small", "huge"],
+      "position": 5,
+      "orientation": 0,
+      "color": "black",
+      "eigendynamics": null,
+      "influences": null
     }, {
-      "figure": "",
-      "size": "",
-      "position": ""
+      "type": "input/output/distractor",
+      "figure": "full square",
+      "size": ["massive", "small", "huge"],
+      "position": 5,
+      "orientation": 0,
+      "color": "black",
+      "eigendynamics": null,
+      "influences": null
   }],
   [{
       "type": "input/output/distractor",
       "figure": "full square",
       "size": ["massive", "small", "huge"],
-      "position": "center center"
+      "position": 5,
+      "orientation": 0,
+      "color": "black",
+      "eigendynamics": null,
+      "influences": null
     }, {
-      "figure": "",
-      "size": "",
-      "position": ""
+      "type": "input/output/distractor",
+      "figure": "full square",
+      "size": ["massive", "small", "huge"],
+      "position": 5,
+      "orientation": 0,
+      "color": "black",
+      "eigendynamics": null,
+      "influences": null
   }]]
 }
 
