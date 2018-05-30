@@ -1,43 +1,61 @@
 {
-  "type": "trial/test",
+  "mode": "application",
   "cells":
   [[{
-      "type": "input/output/distractor",
-      "figure": "full square",
-      "size": ["massive", "small", "huge"],
-      "position": 5,
-      "orientation": 0,
-      "color": "black",
-      "eigendynamics": null,
-      "influences": null
+      "id": "a",
+      "type": "input",
+      "figures": [{
+          "figure": "full square",
+          "size": ["small", "small", "huge"],
+          "position": 2,
+          "rotation": 45,
+          "color": ["blue", "black"],
+          "eigendynamics": null,
+          "influences": null
+        }, {
+            "figure": "circle",
+            "size": ["small", "small", "huge"],
+            "position": 7,
+            "rotation": 45,
+            "color": "black",
+            "eigendynamics": null,
+            "influences": null
+          }]
     }, {
-      "type": "input/output/distractor",
-      "figure": "full square",
-      "size": ["massive", "small", "huge"],
-      "position": 5,
-      "orientation": 0,
-      "color": "black",
-      "eigendynamics": null,
-      "influences": null
+      "id": "b",
+      "type": "input",
+      "figures": [{
+          "figure": "circle",
+          "size": ["small", "small", "huge"],
+          "position": 5,
+          "rotation": 45,
+          "color": "black"
+        }]
   }],
   [{
-      "type": "input/output/distractor",
-      "figure": "full square",
-      "size": ["massive", "small", "huge"],
-      "position": 5,
-      "orientation": 0,
-      "color": "black",
-      "eigendynamics": null,
-      "influences": null
+      "id": "c",
+      "type": "rule-defining",
+      "figures": {
+          "figure": "angle up",
+          "size": ["small", "small", "huge"],
+          "position": 5,
+          "rotation": 90,
+          "color": "black",
+          "eigendynamics": null,
+          "influences": null
+        }
     }, {
-      "type": "input/output/distractor",
-      "figure": "full square",
-      "size": ["massive", "small", "huge"],
-      "position": 5,
-      "orientation": 0,
-      "color": "black",
-      "eigendynamics": null,
-      "influences": null
+      "id": "b",
+      "type": "output",
+      "figures": [{
+          "figure": "sync",
+          "size": ["small", "small", "huge"],
+          "position": 5,
+          "rotation": 0,
+          "color": "black",
+          "eigendynamics": null,
+          "influences": null
+        }]
   }]]
 }
 

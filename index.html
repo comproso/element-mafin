@@ -18,27 +18,33 @@
 </head>
 <body>
   <div id="wrapper">
-    <form id="item-1">
-      <table id="table-1" class="ui celled unstackable table">
-        <tr ="first row">
-          <td class="first cell">
-            <i></i>
-          </td>
-          <td class="second last cell">
-            <i></i>
-          </td>
-        </tr>
-        <tr class="second last row">
-          <td class="first cell">
-            <i></i>
-          </td>
-          <td class="second last cell">
-            <i></i>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </form>
+    <form id="item-1"></form>
+  </div>
+  <script type="text/javascript">
+    $.ajax({
+      dataType: "json",
+      mimeType: "application/json",
+      url: "assets/element-definition.json",
+      error: function( xhr, status, error) {
+        console.log(xhr);
+        console.log(status);
+        console.log(error);
+      },
+      success: function (data) {
+        // create the matrix
+        mafin.createMatrix(data, $('#wrapper form'));
+
+        $('td.input').click(function () {
+          alert('clicked');
+        });
+      }
+    });
+    $(document).ready(function () {
+      $('#wrapper > form td.input').click(function () {
+        mafin.changeStates($(this));
+      });
+    });
+  </script>
 </body>
 </html>
 

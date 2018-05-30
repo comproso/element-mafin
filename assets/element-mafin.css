@@ -1,2 +1,98 @@
+body {
+  /*background-color: #FF0000;*/
+}
 
+table {
+  display: table;;
+}
+
+tr {
+  display: table-row;
+}
+
+td {
+  width: 75px;
+  height: 75px;
+
+  padding: 5px;
+  display: table-cell;
+  position: relative;
+  border: 1px solid #000;
+  border-collapse: collapse;
+}
+
+td > *{
+  z-index: -1;
+}
+
+td.input {
+  cursor: pointer;
+}
+
+td i.icon {
+  position: absolute;
+}
+
+td i.icon.top {
+  top: 5px;
+  bottom: auto;
+}
+
+td i.icon.middle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+td i.icon.bottom {
+  top: auto;
+  bottom: 5px;
+}
+
+td i.icon.left {
+  left: 5px;
+  right: auto;
+}
+
+td i.icon.center {
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+}
+
+td i.icon.right {
+  left: auto;
+  right: 5px;
+}
+
+td i.icon.center.middle {
+  transform: translate(-50%, -50%);
+}
+
+i.icon.r45::before {
+  transform: rotate(45deg);
+}
+
+i.icon.r90::before {
+  transform: rotate(90deg);
+}
+
+i.icon.r135::before {
+  transform: rotate(135deg);
+}
+
+i.icon.r180::before {
+  transform: rotate(180deg);
+}
+
+i.icon.r225::before {
+  transform: rotate(225deg);
+}
+
+i.icon.r270::before {
+  transform: rotate(270deg);
+}
+
+i.icon.r315::before {
+  transform: rotate(315deg);
+}
 
