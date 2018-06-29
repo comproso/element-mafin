@@ -2,23 +2,12 @@ body {
   /*background-color: #FF0000;*/
 }
 
-table {
-  display: table;;
-}
-
-tr {
-  display: table-row;
-}
-
 td {
-  width: 75px;
-  height: 75px;
+  width: 125px;
+  height: 125px;
 
-  padding: 5px;
-  display: table-cell;
+  padding: 5px !important;
   position: relative;
-  border: 1px solid #000;
-  border-collapse: collapse;
 }
 
 td > *{
@@ -31,6 +20,7 @@ td.input {
 
 td i.icon {
   position: absolute;
+  z-index: 100;
 }
 
 td i.icon.top {
@@ -96,3 +86,10 @@ i.icon.r315::before {
   transform: rotate(315deg);
 }
 
+td[class*="able"] {
+  cursor: pointer;
+}
+
+td.selected {
+  background-color: rgba(34,36,38,.1);
+}

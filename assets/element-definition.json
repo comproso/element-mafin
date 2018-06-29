@@ -1,61 +1,87 @@
 {
-  "mode": "application",
-  "cells":
-  [[{
-      "id": "a",
-      "type": "input",
-      "figures": [{
-          "figure": "full square",
-          "size": ["small", "small", "huge"],
-          "position": 2,
-          "rotation": 45,
-          "color": ["blue", "black"],
-          "eigendynamics": null,
-          "influences": null
-        }, {
-            "figure": "circle",
-            "size": ["small", "small", "huge"],
-            "position": 7,
-            "rotation": 45,
-            "color": "black",
-            "eigendynamics": null,
-            "influences": null
+  "config": {
+    "mode": "assessment"
+  },
+  "elements" : [
+    {
+      "type": "table",
+      "template": "elcol.table",
+      "position": "prepend",
+      "attributes": {
+        "class": "ui celled unstackable collapsing"
+      },
+      "subitems": [{
+        "type": "row",
+        "template": "elcol.row",
+        "subitems": [{
+          "id": "a",
+          "type": "cell",
+          "template": "elcol.cell",
+          "mafin": {
+              "type": "input",
+              "influences": {"d": ["size"]},
+              "figures": [{
+                  "figure": "circle",
+                  "size": "large",
+                  "position": 5,
+                  "rotation": 0,
+                  "color": "black",
+                  "eigendynamics": null
+                }]
+            }
+          }, {
+            "id": "b",
+            "type": "cell",
+            "template": "elcol.cell",
+            "mafin": {
+              "type": "rule-defining",
+              "figures": [{
+                  "figure": "outline circle",
+                  "size": "huge",
+                  "position": 5,
+                  "rotation": 0,
+                  "color": "black"
+              }]
+            }
           }]
-    }, {
-      "id": "b",
-      "type": "input",
-      "figures": [{
-          "figure": "circle",
-          "size": ["small", "small", "huge"],
-          "position": 5,
-          "rotation": 45,
-          "color": "black"
-        }]
-  }],
-  [{
-      "id": "c",
-      "type": "rule-defining",
-      "figures": {
-          "figure": "angle up",
-          "size": ["small", "small", "huge"],
-          "position": 5,
-          "rotation": 90,
-          "color": "black",
-          "eigendynamics": null,
-          "influences": null
-        }
-    }, {
-      "id": "b",
-      "type": "output",
-      "figures": [{
-          "figure": "sync",
-          "size": ["small", "small", "huge"],
-          "position": 5,
-          "rotation": 0,
-          "color": "black",
-          "eigendynamics": null,
-          "influences": null
-        }]
-  }]]
+        }, {
+          "type": "row",
+          "template": "elcol.row",
+          "subitems": [{
+            "id": "c",
+            "type": "cell",
+            "template": "elcol.cell",
+            "mafin": {
+                "type": "input",
+                "influences": {
+                  "d": ["figure"]
+                },
+                "figures": [{
+                    "figure": ["caret up", "full square"],
+                    "size": ["huge", "large"],
+                    "position": 5,
+                    "rotation": 0,
+                    "color": "black",
+                    "eigendynamics": null
+                  }]
+              }
+            }, {
+              "id": "d",
+              "type": "cell",
+              "template": "elcol.cell",
+              "mafin": {
+                "type": "output",
+                "figures": [{
+                    "figure": ["full square", "full square outline"],
+                    "size": ["large", "huge"],
+                    "position": 5,
+                    "rotation": 0,
+                    "color": "black"
+                }]
+              }
+            }]
+          }
+      ]
+    }
+  ]
 }
-

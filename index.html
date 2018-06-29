@@ -13,38 +13,216 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
+  <script src="assets/comproso.js"></script>
+  <script src="assets/elcol.js"></script>
   <script src="assets/element-mafin.js"></script>
   <script src="assets/behavior.js"></script>
+  <style type="text/css">
+    body > * {
+      padding-top: 75px;
+    }
+
+    header .menu {
+      //
+    }
+
+    header .segment {
+      min-height: 450px;
+      max-height: 100vh;
+    }
+
+    header .content {
+      height: 300px;
+
+      display: block;
+      position: relative;
+      margin: 50px auto;
+      background-image: url('assets/logo.png');
+      background-repeat: no-repeat;
+      background-position: 20px center;
+      background-size: contain;
+    }
+
+    header h1 {
+      font-size: 4.5em !important;
+      font-size: 4.5rem !important;
+    }
+
+    p {
+      padding: 25px;
+    }
+
+    footer p {
+      padding: 0;
+    }
+
+    .padded {
+      margin-left: 25px !important;
+    }
+
+    #wrapper {
+      width: 100%;
+      max-width: 500px;
+
+      margin: 0 auto;
+    }
+
+    #pageActions .primary.button {
+      margin-left: 90px;
+    }
+  </style>
 </head>
 <body>
-  <div id="wrapper">
-    <form id="item-1"></form>
+  <header id="header">
+    <div class="ui pointing fixed labeled icon menu">
+      <a class="item" href="#header">
+        <i class="home icon"></i>
+        Home
+      </a>
+      <a class="item" href="#about">
+        <i class="info circle icon"></i>
+        About
+      </a>
+      <a class="item" href="#example">
+        <i class="play icon"></i>
+        Example
+      </a>
+      <a class="item" href="#details">
+        <i class="code icon"></i>
+        Details
+      </a>
+      <div class="right labeled icon menu">
+        <a class="item" href="https://github.com/comproso/element-mafin/">
+          <i class="github icon"></i>
+          GitHub
+        </a>
+      </div>
+    </div>
+    <div class="ui inverted vertical center aligned segment">
+      <div class="content">
+        <h1 class="ui inverted header">MaFIN</h1>
+        <h2 class="ui inverted header">A concept using Matrices as Finite State Automata</h2>
+        <a class="ui huge primary button" href="#example">
+          Try the example
+          <i class="right arrow icon"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+  <div id="about" class="">
+    <p>
+      The assessment of Complex Problem Solving requires specific tests and assessment approaches.
+      Aiming to minimalize the differences between Complex Problem Solving assessment and Problem Solving asssessment, we introduce the MaFIN approach.
+    </p>
   </div>
+  <div id="example" class="">
+    <h2 class="ui padded header">Example item</h2>
+    <div id="wrapper">
+      <form id="item-1" action="assets/element-definition.json">
+      </form>
+      <div id="pageActions">
+        <input type="reset" class="ui secondary button" value="Reset" />
+        <input type="submit" class="ui primary button" value="Continue" />
+      </div>
+    </div>
+  </div>
+  <div id="details" class="">
+    <div class="ui stackable inverted divided equal height stackable grid">
+      <div class="eight wide column">
+        <h4 class="ui padded header">Explanation</h4>
+        <p>
+          The <em>mafin</em> property of each JSON-object description allows for each cell to define and add an unlimited number of figures and figure properties.
+        </p>
+      </div>
+      <div class="eight wide column">
+        <h4 class="ui header">JSON code:</h4>
+        <code>
+          <pre>
+{
+  "id": "a",
+  "type": "cell",
+  "template": "elcol.cell",
+  "mafin": {
+    "type": "input",
+    "influences": {"d": ["size", "rotation"]},
+    "figures": [{
+      "figure": "full square",
+      "size": ["small", "small", "huge"],
+      "position": 2,
+      "rotation": 45,
+      "color": ["blue", "black"],
+      "eigendynamics": null
+    }, {
+      "figure": "circle",
+      "size": ["small", "small", "huge"],
+      "position": 7,
+      "rotation": 45,
+      "color": "black",
+      "eigendynamics": null
+    }]
+  }
+}
+          </pre>
+        </code>
+      </div>
+    </div>
+  </div>
+  <footer class="ui inverted segment">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="inverted header">Contact</h4>
+          <p class="ui inverted list">
+            T. Kunze<br />
+            Université du Luxembourg<br />
+            11 Porte des Sciences<br />
+            L-4366 Esch-sur-Alzette<br />
+            <br />
+            thiemo {dot} kunze {ät} uni {dot} lu
+          </p>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Contribute</h4>
+          <div class="ui inverted link list">
+            <a class="item" href="https://github.com/comproso/element-mafin/">
+              <i class="github icon"></i>
+              GitHub
+            </a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Notes</h4>
+          <p>
+            The content of this page is published under the
+            <br /><a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International license (CC BY 4.0)</a>
+          </p>
+          <p>
+            However, this page uses other software and components published under different licenses. For instance:
+            <ul class="ui inverted link list">
+              <li class="item">
+                <a href="https://jquery.org">jQuery</a> (<a href="https://tldrlegal.com/license/mit-license">MIT license</a>)
+              </li>
+              <li class="item">
+                <a href="https://jquery.org">Semantic UI</a> (<a href="https://tldrlegal.com/license/mit-license">MIT license</a>)
+              </li>
+              <li class="item">
+                <a href="https://fontawesome.com">Font Awesome</a> (<a href="https://tldrlegal.com/license/open-font-license-(ofl)-explained">SIL Open Font License v1.1 license</a>)
+              </li>
+              <li class="item">
+                <a href="https://comproso.org">Comproso</a> (<a href="https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)">AGPL-3.0</a>)
+              </li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
   <script type="text/javascript">
-    $.ajax({
-      dataType: "json",
-      mimeType: "application/json",
-      url: "assets/element-definition.json",
-      error: function( xhr, status, error) {
-        console.log(xhr);
-        console.log(status);
-        console.log(error);
-      },
-      success: function (data) {
-        // create the matrix
-        mafin.createMatrix(data, $('#wrapper form'));
+    comproso.debug = true;
 
-        $('td.input').click(function () {
-          alert('clicked');
-        });
-      }
-    });
     $(document).ready(function () {
-      $('#wrapper > form td.input').click(function () {
-        mafin.changeStates($(this));
-      });
+      comproso.run();
     });
   </script>
 </body>
 </html>
-
