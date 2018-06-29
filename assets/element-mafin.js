@@ -1,300 +1,321 @@
 // namespace
 var mafin = {};
-/*
-// basic definitions
-mafin.templates = {
-  'table': 'assets/html/table.html',
-  'row': 'assets/html/tr.html',
-  'td': 'assets/html/td.html',
-  'icon': 'assets/html/icon.html'
+
+// configurations
+mafin.template = "elcol.icon";
+mafin.properties = {
+  "names": [
+    "figure",
+    "size",
+    "position",
+    "rotation",
+    "color"
+  ],
+  "position": [
+    "top left",     "top center",     "top right",
+    "middle left",  "middle center",  "middle right",
+    "bottom left",  "bottom center",  "bottom right"
+  ],
+  "rotation": {
+    45: "r45",
+    90: "r90",
+    135: "r135",
+    180: "r180",
+    225: "r225",
+    270: "r270",
+    315: "r315"
+  }
 };
 
-mafin.wrapper = $('#wrapper form');
+// register hooks
+comproso.hooks.beforeElementCreation.push(function (element) {
+  // check if applicable
+  if(element.type === 'cell' && typeof element.mafin !== 'undefined') {
+    // create the element
+    return mafin.createElement(element);
+  } else {
+    return element;
+  }
+});
 
-// clear, load & create matrix
-mafin.initiate = function () {
-  //
-}
+// click event hook
+comproso.hooks.clickEvent.push(function (element, elements) {
+  if($(element).hasClass('mafin-input')) {
+    $(element).toggleClass('selected');
+  }
+});
 
-// matrix
-//  initiate
-mafin.matrix.initiate = function () {
-  //
-}
+// press of the submit button
+comproso.hooks.submitEvent.push(function () {
+  // get relevant elements
+  $(".mafin-input.selected").each(function () {
 
-// update
-mafin.matrix.update = function () {
+    // get relevant data
+    mafinData = $(this).data('mafin');
+    icons = [];
 
-}
-
-mafin.figure.generate = function (figure) {
-
-}
-*/
-
-// deprecated
-
-// getHtml
-mafin.getHtml = function (url, name) {
-    if(typeof this.html === 'undefined')
-    {
-      this.html = {};
+    // update figures
+    for(var figure in mafinData.figures) {
+      icons.push(mafin.createIcon(mafin.updateStates(mafinData.figures[figure])));
     }
 
-    if(typeof mafin.html[name] === 'undefined')
-    {
-      $.ajax({
-        url: url,
-        success: function (data)
-        {
-          mafin.html[name] = $(data.activeElement);
+    // create elements
+    $(this).html("");
+    comproso.createElements(icons, $(this));
+
+    // identify influenced elements
+    if(typeof mafinData.influences !== 'undefined' && mafinData.influences != null) {
+      // loop through output variables
+      $(".mafin-output").each(function () {
+        // loop through figures
+        outputMafinData = $(this).data("mafin");
+
+        // continue if output variable is targeted
+        if(mafinData.influences === "all" || typeof mafinData.influences.all !== 'undefined' || typeof mafinData.influences[$(this).attr('id')] !== 'undefined') {
+          icons = [];
+
+          // temporarily minimize the available properties
+          if(mafinData.influences === "all") {
+            props = Array(outputMafinData.figures.length).fill(mafin.properties.names);
+          } else if(typeof mafinData.influences.all !== 'undefined') {
+            // TODO: validation function that verifies & returns given properties
+            props = Array(outputMafinData.figures.length).fill(mafinData.influences.all);
+          } else {
+            // define variables
+            props = [];
+            cell = mafinData.influences[$(this).attr('id')];
+
+            // all vs. specific figures
+            if(cell === "all" || typeof cell[0] === 'string') {
+              // all figures
+              // get properties
+              if(cell === "all" || cell[0] === "all") {
+                cell = mafin.properties.names;
+              }
+
+              // fill properties
+              props = Array(outputMafinData.figures.length).fill(cell);
+            } else {
+              // loop through figures
+              for(var figureId in cell) {
+                props[figureId] = (cell[figureId] === "all") ? mafin.properties.names : cell[figureId];
+              }
+            }
+          }
+
+          // create icons
+          icons = [];
+
+          // change icons
+          for(var figure in outputMafinData.figures) {
+            icons.push(mafin.createIcon(mafin.updateStates(outputMafinData.figures[figure], props[figure])));
+          }
+
+          // implement changes
+          $(this).html("");
+          comproso.createElements(icons, $(this));
         }
       });
     }
-}
-
-// make icon
-mafin.makeFigure = function (figure, base, state) {
-    // define states
-
-    if(typeof state === 'undefined')
-    {
-      state = {
-        'figure': 0,
-        'size': 0,
-        'color': 0,
-        'position': 0,
-        'rotation': 0
-      }
-    }
-
-    if(typeof state !== 'object')
-    {
-      prev = state;
-
-      state = {
-        'figure': prev,
-        'size': prev,
-        'color': prev,
-        'position': prev,
-        'rotation': prev
-      }
-    }
-
-    if(typeof state.figure === 'undefined') {
-      state.figure = 0;
-    }
-
-    if(typeof state.size === 'undefined') {
-      state.size = 0;
-    }
-
-    if(typeof state.color === 'undefined') {
-      state.color = 0;
-    }
-
-    if(typeof state.position === 'undefined') {
-      state.position = 0;
-    }
-
-    if(typeof state.rotation === 'undefined') {
-      state.rotation = 0;
-    }
-
-    // get current (state-related) properties
-    symbol = (typeof figure.figure === 'object') ? figure.figure[state.figure]: figure.figure;
-    size = (typeof figure.size === 'object') ? figure.size[state.size]: figure.size;
-    color = (typeof figure.color === 'object') ? figure.color[state.color]: figure.color;
-    position = (typeof figure.position === 'object') ? figure.position[state.position]: figure.position;
-    rotation = (typeof figure.rotation === 'object') ? figure.rotation[state.rotation]: figure.rotation;
-
-    // position definitions
-    positions = {
-      1: "top left",
-      2: "top center",
-      3: "top right",
-      4: "middle left",
-      5: "middle center",
-      6: "middle right",
-      7: "bottom left",
-      8: "bottom center",
-      9: "bottom right"
-    };
-
-    // add classes
-    base.addClass(symbol);
-    base.addClass(size);
-    base.addClass(color);
-    base.addClass(positions[position]);
-    base.addClass("r" + rotation);
-
-    return { 'base': base, 'states': state };
-}
-
-// create matrix
-mafin.createMatrix = function (matrix, container) {
-  // preparation
-  this.cells = {};
-  this.cellIds = {};
-  this.table = {};
-  this.mode = matrix.mode;
-
-  // preload all files
-  $.when(
-    this.getHtml('assets/html/table.html', 'table'),
-    this.getHtml('assets/html/tr.html', 'tr'),
-    this.getHtml('assets/html/td.html', 'td'),
-    this.getHtml('assets/html/icon.html', 'icon')
-  ).then(function () {
-    // prepare the matrix creation
-    mafin.table = mafin.html.table.clone();
-
-    var counter = 0;
-
-    // iterate the lines
-    matrix.cells.forEach(function (line) {
-        // create the line
-        tr = mafin.html.tr.clone();
-
-        // iterate the cells
-        line.forEach(function (cell) {
-          // define current cell state & prepare states
-          cell.states = 0;
-          states = {};
-
-          // check if a specific ID was given and store as searchable index
-          if(typeof cell.id !== 'undefined' && cell.id !== null && typeof cell.id !== 'integer')
-          {
-            mafin.cellIds[counter] = cell.id;
-          }
-
-          // create the cell
-          td = mafin.html.td.clone();
-
-          // prepare
-
-          // add figures if necessary
-          if(matrix.mode === 'application' || cell.type !== 'rule-defining') {
-            // iterate figures if necessary
-            if(typeof cell.figures.figure === 'string')
-            {
-              fig = mafin.makeFigure(cell.figures, mafin.html.icon.clone(), cell.state);
-              states[0] = fig.states;
-              td.append(fig.base);
-            }
-            else
-            {
-              figN = 0;
-              cell.figures.forEach(function (figure) {
-                fig = mafin.makeFigure(figure, mafin.html.icon.clone(), cell.state);
-                states[figN] = fig.states;
-                td.append(fig.base);
-                figN++;
-              });
-            }
-
-            // add data
-            td.data('states', states);
-          }
-          else
-          {
-            td.html(' ');
-            td.data('states', 0);
-          }
-
-          // add properties
-          td.addClass(cell.type);
-          td.data('id', counter);
-
-          // insert & save cell for the future
-          tr.append(td);
-          mafin.cells[counter] = cell;
-
-          counter++;
-        });
-
-        // insert into table
-        mafin.table.append(tr);
-    });
-    // insert matrix in DOM
-    $('#wrapper > form').html(mafin.table);
   });
-}
 
-// react to click
-mafin.changeStates = function (element) {
-  // get properties
-  cellId = element.data('id');
-  states = element.data('states');
-  cell = mafin.cells[id];
+  // perform eigendynamics
+  $('.eigendynamic[class*=\"mafin\"]').each(function () {
+    // get eigendynamics
+    dynMafinData = $(this).data('mafin');
 
-  // load files
-  $.when(
-    this.getHtml('assets/html/table.html', 'table'),
-    this.getHtml('assets/html/tr.html', 'tr'),
-    this.getHtml('assets/html/td.html', 'td'),
-    this.getHtml('assets/html/icon.html', 'icon')
-  ).then(function () {
-    // clear cell
-    element.html(' ');
+    icons = [];
 
-    // change cell
-    if(typeof cell.figures.figure === 'undefined')
-    {
-      // iterate figures
-      cell.figures.forEach(function (figure, id) {
-        for (var property in states[id]) {
-          if(++states[id][property] >= figure[property].length) {
-            states[id][property] = 0;
-          }
-        };
-
-        // insert cell content
-        element.append(mafin.makeFigure(figure, mafin.html.icon.clone(), states[id]).base);
-      });
-    }
-    else
-    {
-      states[0].forEach(function (state, property, arr) {
-        if(++state >= cell.figures.figure[property].length) {
-          state = 0;
-        }
-
-        // set current state
-        arr[property] = state;
-      });
-
-      // insert cell content
-      element.append(mafin.makeFigure(cell.figures, mafin.html.icon.clone(), arr).base);
-
-      // TODO: debug single figure cells
-    }
-
-    // insert data
-    element.data('states', states);
-
-    // find cells that are changed
-    mafin.cells.forEach(function (scell, id) {
-      // iterate figures
-      if(scell.figures.figure === 'undefined')
-      {
-
-      }
-      else
-      {
+    // get eigendynamics per figure
+    for(var figure in dynMafinData.figures) {
+      // check if eigendynamics are applicable
+      if(typeof dynMafinData.figures[figure]['eigendynamics'] !== 'undefined') {
+        // specific eigendynamics
         // get eigendynamics
-        if(typeof scell.figures.eigendynamics === 'object')
-        {
-          //
-        }
+      } else  if (typeof dynMafinData.eigendynamics !== 'undefined' && dynMafinData.eigendynamics != null) {
+        // global eigendynamics
+        // TODO
+      }
+    }
 
-        // get any influenced properties
-        if(typeof scell.influenced[cellId] === 'object')
-        {
+    // implement changes
+    $(this).html("");
+    comproso.createElements(icons, $(this));
+  });
 
+  // remove selections
+  $('.mafin-input.selected').removeClass('selected');
+});
+
+// press of the reset button
+comproso.hooks.resetEvent.push(function () {
+  $('.mafin-input, .mafin-output').each(function () {
+    // get relevant data
+    mafinData = $(this).data('mafin');
+    icons = [];
+
+    // update figures
+    for(var figure in mafinData.figures) {
+
+      // TODO update states
+      if(typeof mafinData.figures[figure]['states'] !== 'undefined') {
+        for(var state in mafinData.figures[figure]['states']) {
+          mafinData.figures[figure]['states'][state] = 0;
         }
       }
-    });
+
+      icons.push(mafin.createIcon(mafinData.figures[figure]));
+    }
+
+    $(this).html("");
+
+    comproso.createElements(icons, $(this));
   });
+
+  $('.mafin-input.selected').removeClass('selected');
+});
+
+// create a Mafin Element
+mafin.createElement = function (element) {
+    // add click event
+    if(typeof element.events !== 'undefined' && !element.events.includes('click')) {
+      element.events.push('click');
+    }
+
+    // define variables
+    icons = [];
+    eigendynamics = false;
+
+    // add data if necessary
+    if(typeof element.data === 'undefined') {
+      element.data = {};
+    }
+
+    // handle rule-defining
+    if(element.mafin.type !== "rule-defining" || comproso.config.mode === "assessment") {
+      // loop throug figures
+      for(var figure in element.mafin.figures) {
+        if(typeof element.mafin.figures[figure]['eigendynamics'] !== 'undefined' && element.mafin.figures[figure]['eigendynamics'] != null) {
+          eigendynamics = true;
+        }
+        // add icon to icons
+        icons.push(mafin.createIcon(element.mafin.figures[figure]));
+      }
+    }
+
+    // apply changes
+    element.subitems = icons;
+
+    // data information
+    element.data.mafin = element.mafin;
+
+    // apply general changes
+    if(typeof element.attributes === 'undefined') {
+      element.attributes = {
+        "class": ""
+      }
+    } else if(typeof element.attributes.class === 'undefined') {
+      element.attributes.class = "";
+    }
+
+    element.attributes.class += " mafin-" + element.mafin.type ;
+
+    // add eigendynamics
+    if(eigendynamics) {
+      element.attributes.class += " eigendynamic";
+    }
+
+    // return element
+    return element;
 }
 
+// create an Icon
+mafin.createIcon = function (figure) {
+  // create icon
+  icon = {
+    "type": "icon",
+    "template": mafin.template,
+    "attributes": {
+      "class": ""
+    },
+    "data": {
+      "states": {}
+    }
+  };
+
+  // loop through properties
+  for(var property in mafin.properties.names) {
+    // define classes
+    classes = "";
+
+    // check for different states
+    if(typeof figure[mafin.properties.names[property]] === 'object') {
+      // get current state
+      if(typeof figure['states'] === 'undefined') {
+        figure['states'] = {};
+      }
+
+      if(typeof figure['states'][mafin.properties.names[property]] !== 'undefined') {
+        propValue = figure[mafin.properties.names[property]][figure['states'][mafin.properties.names[property]]];
+      } else {
+        propValue = figure[mafin.properties.names[property]][0];
+        figure['states'][mafin.properties.names[property]] = 0;
+      }
+    } else {
+      propValue = figure[mafin.properties.names[property]];
+    }
+
+    // replace property if necessary
+    if(typeof mafin.properties[mafin.properties.names[property]] !== 'undefined') {
+      if(mafin.properties.names[property] === "position") {
+        propValue--;
+      }
+
+      classes += " " + mafin.properties[mafin.properties.names[property]][propValue];
+    } else {
+      classes += " " + propValue;
+    }
+
+    // add class
+    icon.attributes.class += " " + classes;
+  }
+
+  // return response
+  return icon;
+}
+
+// update MaFIN states
+mafin.updateStates = function (figure, statesToUpdate) {
+  // check states to update
+  if(typeof statesToUpdate === 'undefined' || statesToUpdate === 'all' || statesToUpdate[0] === 'all') {
+    statesToUpdate = mafin.properties.names;
+  }
+
+  // update states
+  if(statesToUpdate != null) {
+    for(var state in statesToUpdate) {
+      // validate states
+      if(mafin.properties.names.includes(statesToUpdate[state])) {
+        // validate changeability
+        if(typeof figure[statesToUpdate[state]] === 'object') {
+          // set figures
+          if(typeof figure.states === 'undefined') {
+            figure.states = {};
+          }
+
+          // set current state
+          currentState = (typeof figure['states'][statesToUpdate[state]] !== 'undefined') ? figure['states'][statesToUpdate[state]] : 0;
+          currentState = (++currentState >= figure[statesToUpdate[state]].length) ? 0 : currentState;
+
+          // save state
+          figure['states'][statesToUpdate[state]] = currentState;
+        }
+      }
+    }
+  }
+
+  // return response
+  return figure;
+}
+
+// extract
